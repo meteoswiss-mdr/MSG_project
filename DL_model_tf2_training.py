@@ -32,7 +32,8 @@ print("TF version:", tf.__version__)
 # In[2]:
 
 
-datapath = '/scratch/fvj/dl_data/'
+# datapath = '/data/ml_course/05_Capstone_project/dl_data/'  # zueub242
+datapath = '/scratch/fvj/dl_data/'  # Payerne workstation
 modelpath = './unet_ld3_fr16'
 callbackpath = './unet_ld3_fr16_callbacks'
 flist_name = 'unet_ld3_fr16_flist.npz'
@@ -50,7 +51,8 @@ filters_root = 16
 # parameters for training and evaluation
 train_batch_size = 32
 pred_batch_size = 32
-epochs = 5
+epochs = 100
+patience = 3
 
 
 # ## Auxiliary functions
@@ -320,11 +322,13 @@ unet.finalize_model(
 # In[16]:
 
 
+early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=patience)
+
 fit_kwargs = {
     'steps_per_epoch': int(nfiles_tr/train_batch_size),
     'validation_steps': int(nfiles_va/train_batch_size)}
 
-trainer = unet.Trainer(log_dir_path=callbackpath, checkpoint_callback=False)
+trainer = unet.Trainer(log_dir_path=callbackpath, checkpoint_callback=False, callbacks=early_stoppping)
 history = trainer.fit(unet_model,
             train_dataset,
             validation_dataset,
