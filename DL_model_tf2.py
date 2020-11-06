@@ -23,7 +23,7 @@ from sklearn.metrics import confusion_matrix
 import inspect
 
 print("TF version:", tf.__version__)
-print("GPU is", "available" if tf.config.list_physical_devices('GPU') else "NOT AVAILABLE")
+# print("GPU is", "available" if tf.config.list_physical_devices('GPU') else "NOT AVAILABLE")
 
 
 # ## Some global variables
@@ -31,23 +31,24 @@ print("GPU is", "available" if tf.config.list_physical_devices('GPU') else "NOT 
 # In[2]:
 
 
-datapath = '/data/ml_course/05_Capstone_project/dl_data/'
+#datapath = '/data/ml_course/05_Capstone_project/dl_data/'
+datapath = '/scratch/fvj/dl_data/'
 modelpath = './unet_ld3_fr16'
 callbackpath = './unet_ld3_fr16_callbacks'
 
 # Number of files used for training, validation and testing
-nfiles_te = 4
-nfiles_va = 4
-nfiles_tr = 36
+nfiles_te = 351
+nfiles_va = 400
+nfiles_tr = 3600
 
 # Model architecture
 layer_depth = 3
 filters_root = 16
 
 # parameters for training and evaluation
-train_batch_size = 4
-pred_batch_size = 4
-epochs = 3
+train_batch_size = 32
+pred_batch_size = 32
+epochs = 5
 
 
 # ## Auxiliary functions
