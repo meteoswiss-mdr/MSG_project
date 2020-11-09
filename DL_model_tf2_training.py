@@ -328,7 +328,7 @@ fit_kwargs = {
     'steps_per_epoch': int(nfiles_tr/train_batch_size),
     'validation_steps': int(nfiles_va/train_batch_size)}
 
-trainer = unet.Trainer(log_dir_path=callbackpath, checkpoint_callback=False, callbacks=early_stoppping)
+trainer = unet.Trainer(log_dir_path=callbackpath, checkpoint_callback=False, callbacks=[early_stopping])
 history = trainer.fit(unet_model,
             train_dataset,
             validation_dataset,
@@ -336,6 +336,7 @@ history = trainer.fit(unet_model,
             batch_size=train_batch_size,
             **fit_kwargs)
 
+print('training finished')
 
 # ## Save trained model
 
